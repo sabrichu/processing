@@ -1,5 +1,7 @@
 Movie glitchedVideo;
 PImage glitchedVideoContainer;
+int frameToSave;
+int secondsToPlaySnapshot = 30;
 
 void setupSnapshot() {
     glitchedVideoContainer = createImage(width, height, RGB);
@@ -9,6 +11,8 @@ void setupSnapshot() {
 }
 
 void drawSnapshot() {
+    // frameToSave =
+
     glitchedVideo.read();
     glitchedVideoContainer.copy(glitchedVideo, 0, 0, glitchedVideo.width, glitchedVideo.height, 0, 0, width, height);
 

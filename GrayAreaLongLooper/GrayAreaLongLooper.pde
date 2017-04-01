@@ -16,7 +16,7 @@ SyphonServer server;
 String pathToImagesFolder = "/Users/sabrichu/Projects/Creative Code 2017/The snapshot/dist/images/";
 String filenameToSend;
 
-String mode = "snapshot";
+String mode = "standby";
 
 void settings() {
     size(1200, 800, P3D);
@@ -24,8 +24,10 @@ void settings() {
 }
 
 void setup() {
+    setupStandby();
     setupColorMorpher();
     setupSnapshot();
+    // setupThankYou();
 
     // For listening
     oscP5 = new OscP5(this, 12000);
@@ -33,19 +35,21 @@ void setup() {
     // For sending
     oscLocation = new NetAddress("localhost", 8000);
 
-    setupStandby();
-
     server = new SyphonServer(this, "Processing Syphon");
 }
 
 void draw() {
+    if (mode == "standby") {
+        drawStandby();
+    }
+
     if (mode == "snapshot") {
         drawSnapshot();
     }
 
-    if (mode == "hallo") {
-        drawStandby();
-    }
+    // if (mode == "thanks") {
+    //     drawThankYou();
+    // }
 
     server.sendImage(get());
 }
@@ -64,7 +68,7 @@ void keyPressed() {
     }
 
     if (key == 'h') {
-        mode = "hallo";
+        mode = "standby";
     }
 
     if (key == 'p') {

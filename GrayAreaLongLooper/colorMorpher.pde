@@ -4,35 +4,38 @@ float colorMorphGmagnitude = 1.2;
 float colorMorphBmagnitude = 1.5;
 float colorMorphXoff = 0;
 float colorMorphYoff = 0;
-float colorMorphNoiseFactor = 0.002;
+float colorMorphNoiseFactor = 0.02;
 float colorMorphZoff = 0;
 float colorMorphTimeFactor = 0.03;
 
-PImage colorMorpher;
+PGraphics colorMorpher;
+
+int colorMorphPixelSize = 10;
 
 void setupColorMorpher() {
     noStroke();
     noiseDetail(1);
 
-    colorMorpher = createImage(width, height, RGB);
+    colorMorpher = createGraphics(width, height);
 }
 
 void colorMorph() {
     colorMorphYoff = colorMorphStart;
 
-    colorMorpher.loadPixels();
+    colorMorpher.beginDraw();
 
-    for (int x = 0; x < width; x++) {
+    for (int x = 0; x < width; x += colorMorphPixelSize) {
         colorMorphXoff = colorMorphStart;
 
-        for (int y = 0; y < height; y++) {
-            // y * width to move down the rows
-            // In p5.js, * 4 cos rgba
-            colorMorpher.pixels[(x + y * width)] = color(
+        for (int y = 0; y < height; y += colorMorphPixelSize) {
+            colorMorpher.noStroke();
+            colorMorpher.fill(color(
                 rgbValue(colorMorphRmagnitude, colorMorphXoff, colorMorphYoff, colorMorphZoff),
                 rgbValue(colorMorphGmagnitude, colorMorphXoff, colorMorphYoff, colorMorphZoff),
                 rgbValue(colorMorphBmagnitude, colorMorphXoff, colorMorphYoff, colorMorphZoff)
-            );
+            ));
+            colorMorpher.rect(x, y, colorMorphPixelSize, colorMorphPixelSize);
+
             colorMorphXoff += colorMorphNoiseFactor;
         }
         colorMorphYoff += colorMorphNoiseFactor;
@@ -43,7 +46,7 @@ void colorMorph() {
     // Pans the pixels on a diagonal
     colorMorphStart += colorMorphNoiseFactor;
 
-    colorMorpher.updatePixels();
+    colorMorpher.endDraw();
 }
 
 int rgbValue(
