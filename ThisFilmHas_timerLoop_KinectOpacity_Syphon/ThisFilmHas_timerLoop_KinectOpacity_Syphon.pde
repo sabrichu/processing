@@ -25,12 +25,7 @@ int flickLoopFrames = 0;
 float flickerMaxNumFrames;
 int flickerFactor = 60;
 
-int personEnteredThreshold = 800;
-boolean personEntered = false;
-boolean personLeft = false;
-
-int personEnteredFrameCounter = 0;
-int personEnteredFramesToWait = 100;
+int personEnteredThreshold = 350;
 
 void settings() {
     size(1200, 800, P3D);
@@ -59,64 +54,29 @@ void setup() {
 void draw() {
     int closestPoint = getKinectClosestPoint();
     boolean isPersonOutOfRange = closestPoint > personEnteredThreshold;
-    boolean playStandby = true;
 
-    println(closestPoint);
-    // if (personEntered & !video.available()) {
-    //     isPersonOutOfRange = true;
-    //     personEntered = false;
-    // }
-
-    print(video.duration());
-    if (video.time() == video.duration()) { //movie must be finished
-        background(0);
-
-        if (!isPersonOutOfRange) {
-            return;
-        }
+    if (video.time() == video.duration()) {
+        video.jump(0);
+        video.stop();
     }
 
-    if (isPersonOutOfRange) {
-        playStandby = true;
-
-        // If person is out of range but had previously entered
-        if (personEntered) {
-            // Wait a few frames before resetting the video to make up for potential flickering data
-
-            if (personEnteredFrameCounter < personEnteredFramesToWait) {
-                playStandby = false;
-
-                personEnteredFrameCounter++;
-            } else {
-                // Reset video if person has left
-                video.jump(0);
-                video.stop();
-
-                personEntered = false;
-                personEnteredFrameCounter = 0;
-
-                playStandby = true;
-            }
-        }
-    } else {
-        personEntered = true;
-        playStandby = false;
-    }
-
-    if (playStandby) {
+    if (isPersonOutOfRange && video.time() <= 0) {
         standbyVideo.read();
         image(standbyVideo, 0, 0, width, height);
 
+        tintScreen(closestPoint);
         glitchOut();
     } else {
         video.play();
         video.read();
         image(video, 0, 0, width, height);
+        filter(INVERT);
     }
 
-    tintScreen(closestPoint);
-
-    // Debuggings
+    // Debugging
+    if (closestPoint < 350) {
+        println("Closest point: " + closestPoint);
+    }
     fill(255, 0, 0);
     ellipse(closestX, closestY, 10, 10);
 
@@ -141,10 +101,10 @@ int getKinectClosestPoint() {
 }
 
 void tintScreen(int closestPoint) {
-    //float mapped = floor(map(closestValue, 500, 1048, 0, 255));
-    //tint(255, mapped);
+    float mapped = floor(map(closestPoint, 0, 1048, 0, 255));
 
-    float mapped = floor(map(closestPoint, 0, 1048, 255, 0));
+    // Debugging
+    println("Standby tint mapped: " + mapped);
 
     fill(0, mapped);
     rect(0, 0, width, height);
@@ -154,7 +114,7 @@ void glitchOut() {
     loadPixels();
 
     for (int i = 0; i < width; i++) {
-        int randomY = floor(noise(xoff) * height);
+        int randomY = floor(map(noise(xoff), 0, 1, height / 6, height));
         int endHeightOfRect = height - randomY;
 
         int pixelIndex = width * (randomY - 1) + i;
