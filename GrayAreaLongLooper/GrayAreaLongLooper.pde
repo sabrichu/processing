@@ -54,6 +54,7 @@ void draw() {
             drawSnapshot();
             snapshotCounter++;
         } else {
+            stopSnapshot();
             mode = "thanks";
             snapshotCounter = 0;
         }
@@ -89,6 +90,7 @@ void keyPressed() {
     }
 
     if (key == 'p') {
+        prepareSnapshot();
         mode = "snapshot";
     }
 }

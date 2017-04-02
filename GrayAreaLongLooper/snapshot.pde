@@ -1,23 +1,47 @@
-Movie glitchedVideo;
-PImage glitchedVideoContainer;
+Movie biosVideo;
+Movie zoeVideo;
+PImage biosVideoContainer;
+PImage zoeVideoContainer;
 int frameToSave;
 
 void setupSnapshot() {
-    glitchedVideoContainer = createImage(width, height, RGB);
+    biosVideoContainer = createImage(width, height, RGB);
+    zoeVideoContainer = createImage(width, height, RGB);
 
-    glitchedVideo = new Movie(this, "DarkClouds.mp4");
-    glitchedVideo.loop();
+    //biosVideo = new Movie(this, "Soap720.mov");
+    biosVideo = new Movie(this, "darkerClouds.mov");
+    biosVideo.loop();
+
+    zoeVideo = new Movie(this, "Soap720.mov");
+    zoeVideo.loop();
+}
+
+void prepareSnapshot() {
+    biosVideo.jump(random(0, biosVideo.duration()));
+    zoeVideo.jump(random(0, biosVideo.duration()));
+
+    snapshotSeed.update();
 }
 
 void drawSnapshot() {
-    tint(255, 255);
+    biosVideo.read();
+    biosVideoContainer.copy(biosVideo, 0, 0, biosVideo.width, biosVideo.height, 0, 0, width, height);
+    zoeVideo.read();
+    zoeVideoContainer.copy(zoeVideo, 0, 0, zoeVideo.width, zoeVideo.height, 0, 0, width, height);
+    zoeVideoContainer.blend(biosVideoContainer, 0, 0, biosVideoContainer.width, biosVideoContainer.height, 0, 0, width, height, snapshotSeed.biosZoeBlendMode);
 
-    glitchedVideo.read();
-    glitchedVideoContainer.copy(glitchedVideo, 0, 0, glitchedVideo.width, glitchedVideo.height, 0, 0, width, height);
+    drawColorMorpher();
 
-    colorMorph();
-    colorMorpher.blend(glitchedVideoContainer, 0, 0, width, height, 0, 0, width, height, ADD);
+    // ADD, DIFFERENCE, EXCLUSION
+    colorMorpher.blend(zoeVideoContainer, 0, 0, width, height, 0, 0, width, height, snapshotSeed.colorMorpherBlendMode);
     image(colorMorpher, 0, 0);
 
-    colorDrip();
+    drawColorDrip();
+}
+
+void stopSnapshot() {
+    biosVideo.stop();
+    zoeVideo.stop();
+
+    System.gc();
 }

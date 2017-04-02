@@ -1,7 +1,7 @@
 float dripXOff = 0;
 float dripYOff = 0;
 
-void colorDrip() {
+void drawColorDrip() {
     int dripDirection = snapshotSeed.dripDirection;
     float dripIntensity = snapshotSeed.dripIntensity;
 

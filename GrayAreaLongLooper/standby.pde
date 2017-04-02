@@ -38,9 +38,9 @@ void drawStandby() {
     if (helloVideo.time() == helloVideo.duration()) {
         helloVideo.jump(0);
         helloVideo.stop();
+        System.gc();
 
-        // Gather and set seed data here
-
+        prepareSnapshot();
         mode = "snapshot";
     }
 
