@@ -17,6 +17,9 @@ String pathToImagesFolder = "/Users/sabrichu/Projects/Creative Code 2017/The sna
 String filenameToSend;
 
 String mode = "standby";
+// 10 frames per second (if performing well)
+int secondsToPlaySnapshot = 30 * 10;
+int snapshotCounter = 0;
 
 void settings() {
     size(1200, 800, P3D);
@@ -44,12 +47,23 @@ void draw() {
     }
 
     if (mode == "snapshot") {
-        drawSnapshot();
+        if (snapshotCounter < secondsToPlaySnapshot) {
+            drawSnapshot();
+            snapshotCounter++;
+        } else {
+            mode = "thanks";
+            snapshotCounter = 0;
+        }
     }
 
-    // if (mode == "thanks") {
-    //     drawThankYou();
-    // }
+    if (mode == "thanks") {
+        background(255, 0, 0);
+        // drawThankYou();
+        // Thank You DRGKLERKJLEK
+        // Or however you pronounce that
+        // please exit and retrieve your photobooth
+        // if thank video has ended, mode = "standby"
+    }
 
     server.sendImage(get());
 }

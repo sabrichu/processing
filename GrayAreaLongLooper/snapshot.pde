@@ -1,7 +1,6 @@
 Movie glitchedVideo;
 PImage glitchedVideoContainer;
 int frameToSave;
-int secondsToPlaySnapshot = 30;
 
 void setupSnapshot() {
     glitchedVideoContainer = createImage(width, height, RGB);
