@@ -10,7 +10,7 @@ void setupSnapshot() {
 }
 
 void drawSnapshot() {
-    // frameToSave =
+    tint(255, 255);
 
     glitchedVideo.read();
     glitchedVideoContainer.copy(glitchedVideo, 0, 0, glitchedVideo.width, glitchedVideo.height, 0, 0, width, height);
