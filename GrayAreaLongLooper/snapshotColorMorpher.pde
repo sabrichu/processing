@@ -4,9 +4,7 @@ float colorMorphGmagnitude = 1.2;
 float colorMorphBmagnitude = 1.5;
 float colorMorphXoff = 0;
 float colorMorphYoff = 0;
-float colorMorphNoiseFactor = 0.02;
 float colorMorphZoff = 0;
-float colorMorphTimeFactor = 0.03;
 
 PGraphics colorMorpher;
 
@@ -20,6 +18,9 @@ void setupColorMorpher() {
 }
 
 void colorMorph() {
+    float colorMorphNoiseFactor = snapshotSeed.colorIntensity;
+    float colorMorphTimeFactor = snapshotSeed.colorPanIntensity;
+
     colorMorphYoff = colorMorphStart;
 
     colorMorpher.beginDraw();
@@ -28,7 +29,7 @@ void colorMorph() {
         colorMorphXoff = colorMorphStart;
 
         for (int y = 0; y < height; y += colorMorphPixelSize) {
-            colorMorpher.noStroke();
+             colorMorpher.noStroke();
             colorMorpher.fill(color(
                 rgbValue(colorMorphRmagnitude, colorMorphXoff, colorMorphYoff, colorMorphZoff),
                 rgbValue(colorMorphGmagnitude, colorMorphXoff, colorMorphYoff, colorMorphZoff),

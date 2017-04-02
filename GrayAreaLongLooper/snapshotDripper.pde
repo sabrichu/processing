@@ -1,9 +1,10 @@
-int dripDirection = 4;
 float dripXOff = 0;
 float dripYOff = 0;
-float dripNoiseFactor = 0.009;
 
 void colorDrip() {
+    int dripDirection = snapshotSeed.dripDirection;
+    float dripIntensity = snapshotSeed.dripIntensity;
+
     int sourceIndex;
 
     dripXOff = 0;
@@ -24,7 +25,7 @@ void colorDrip() {
                 }
             }
 
-            dripXOff += dripNoiseFactor;
+            dripXOff += dripIntensity;
         }
     } else {
         for (int i = 0; i < height; i++) {
@@ -45,8 +46,8 @@ void colorDrip() {
                 }
             }
 
-            dripXOff += dripNoiseFactor;
+            dripXOff += dripIntensity;
         }
     }
-    dripYOff += dripNoiseFactor;
+    dripYOff += dripIntensity;
 }

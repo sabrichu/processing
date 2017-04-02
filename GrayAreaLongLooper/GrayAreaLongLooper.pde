@@ -21,6 +21,8 @@ String mode = "standby";
 int secondsToPlaySnapshot = 30 * 10;
 int snapshotCounter = 0;
 
+Seed snapshotSeed;
+
 void settings() {
     size(1200, 800, P3D);
     PJOGL.profile = 1;
@@ -32,9 +34,10 @@ void setup() {
     setupSnapshot();
     // setupThankYou();
 
+    snapshotSeed = new Seed();
+
     // For listening
     oscP5 = new OscP5(this, 12000);
-
     // For sending
     oscLocation = new NetAddress("localhost", 8000);
 
