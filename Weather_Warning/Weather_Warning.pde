@@ -3,6 +3,8 @@ import processing.video.*;
 Movie video;
 
 PImage colorMorpher;
+PGraphics colorRects;
+
 PImage videoContainer;
 
 void setup() {
@@ -12,8 +14,9 @@ void setup() {
     noiseDetail(1);
 
     colorMorpher = createImage(width, height, RGB);
+    colorRects = createGraphics(width, height);
     videoContainer = createImage(width, height, RGB);
-
+    //colorMorpher.
     video = new Movie(this, "DarkClouds.mp4");
     //video.speed(0.1);
     video.loop();
@@ -24,10 +27,11 @@ void draw() {
     videoContainer.copy(video, 0, 0, video.width, video.height, 0, 0, width, height);
 
     colorMorph();
-    colorMorpher.blend(videoContainer, 0, 0, width, height, 0, 0, width, height, ADD);
-    image(colorMorpher, 0, 0);
-
-    colorDrip();
+    colorRects.blend(videoContainer, 0, 0, width, height, 0, 0, width, height, ADD);
+    //colorMorpher.blend(videoContainer, 0, 0, width, height, 0, 0, width, height, ADD);
+    //image(colorMorpher, 0, 0);
+    image(colorRects, 0, 0);
+    //colorDrip();
 }
 
 int dripDirection = 0;
@@ -89,21 +93,30 @@ float colorMorphGmagnitude = 1.2;
 float colorMorphBmagnitude = 1.5;
 float colorMorphXoff = 0;
 float colorMorphYoff = 0;
-float colorMorphNoiseFactor = 0.002;
+float colorMorphNoiseFactor = 0.02;
 float colorMorphZoff = 0;
 float colorMorphTimeFactor = 0.03;
 
+int colorMorphPixelSize = 10;
+
 void colorMorph() {
     colorMorphYoff = colorMorphStart;
-
-    colorMorpher.loadPixels();
-
-    for (int x = 0; x < width; x++) {
+    tint(255, 100);
+    //colorMorpher.loadPixels();
+    colorRects.beginDraw();
+    for (int x = 0; x < width; x += colorMorphPixelSize) {
         colorMorphXoff = colorMorphStart;
 
-        for (int y = 0; y < height; y++) {
+        for (int y = 0; y < height; y += colorMorphPixelSize) {
             // y * width to move down the rows
             // In p5.js, * 4 cos rgba
+            colorRects.noStroke();
+            colorRects.fill(color(
+                rgbValue(colorMorphRmagnitude, colorMorphXoff, colorMorphYoff, colorMorphZoff),
+                rgbValue(colorMorphGmagnitude, colorMorphXoff, colorMorphYoff, colorMorphZoff),
+                rgbValue(colorMorphBmagnitude, colorMorphXoff, colorMorphYoff, colorMorphZoff)
+            ));
+            colorRects.rect(x, y, colorMorphPixelSize, colorMorphPixelSize);
             colorMorpher.pixels[(x + y * width)] = color(
                 rgbValue(colorMorphRmagnitude, colorMorphXoff, colorMorphYoff, colorMorphZoff),
                 rgbValue(colorMorphGmagnitude, colorMorphXoff, colorMorphYoff, colorMorphZoff),
@@ -118,8 +131,8 @@ void colorMorph() {
 
     // Pans the pixels on a diagonal
     colorMorphStart += colorMorphNoiseFactor;
-
-    colorMorpher.updatePixels();
+    colorRects.endDraw();
+    //colorMorpher.updatePixels();
 }
 
 int rgbValue(
