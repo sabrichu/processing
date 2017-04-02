@@ -3,6 +3,7 @@ int closestX = 0;
 int closestY = 0;
 Movie video;
 Movie standbyVideo;
+float videoWidthPercentage = 0.5;
 
 // Noise control
 float xoff = 0;
@@ -19,36 +20,56 @@ int personEnteredThreshold = 350;
 void setupStandby() {
     flickerMaxNumFrames = frameRate * flickerLoopMinutes * 60;
 
-    kinect = new Kinect(this); //<>//
+    kinect = new Kinect(this);
     kinect.initDepth();
 
-    video = new Movie(this, "Picture.mov");
+    video = new Movie(this, "Hello720.mov");
 
     standbyVideo = new Movie(this, "Declursified.mov");
     standbyVideo.loop();
 }
 
 void drawStandby() {
+    background(0);
+
     int closestPoint = getKinectClosestPoint();
     boolean isPersonOutOfRange = closestPoint > personEnteredThreshold;
 
     if (video.time() == video.duration()) {
         video.jump(0);
         video.stop();
+
+        mode = "snapshot";
     }
 
     if (isPersonOutOfRange && video.time() <= 0) {
         standbyVideo.read();
-        image(standbyVideo, 0, 0, width, height);
+        image(standbyVideo, 0, height * 0.2, width * videoWidthPercentage, height * videoWidthPercentage);
 
         tintScreen(closestPoint);
         glitchOut();
     } else {
         tint(255, 255);
+
         video.play();
         video.read();
-        image(video, 0, 0, width, height);
-        filter(INVERT);
+
+        float relativeVideoWidth = map(
+            video.width,
+            0, video.width,
+            0, width * videoWidthPercentage
+        );
+        float relativeVideoHeight = map(
+            video.height,
+            0, video.height,
+            0, height
+        );
+        image(
+            video,
+            (width - relativeVideoWidth) / 2, (height - relativeVideoHeight) / 2,
+            width * videoWidthPercentage, height * videoWidthPercentage
+        );
+        // filter(INVERT);
     }
 
     // Debugging
