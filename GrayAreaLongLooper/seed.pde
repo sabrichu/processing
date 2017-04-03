@@ -1,33 +1,32 @@
+
 class Seed {
     int biosZoeBlendMode = SUBTRACT;
     int colorMorpherBlendMode = ADD;
     int dripDirection = 0;
+    float dripXOff = 0;
     float dripIntensity = 0.005;
     float colorIntensity = 0.02;
     float colorPanIntensity = 0.03;
-    //float colorize =
 
-    //int[] possibleBZBlendModes = {
-    //    DIFFERENCE
-    //}
+    int frameToTakeSnapshot = 0;
 
-    //int[] possibleCMBlendModes = {
-    //    DIFFERENCE
-    //}
+    int[] possibleBlendModes = {
+        DIFFERENCE,
+        SUBTRACT,
+        EXCLUSION,
+        ADD,
+        LIGHTEST,
+        SCREEN
+    };
 
-    void update(
-        // int updatedDripDirection,
-        // float updatedDripIntensity,
-        // float updatedColorIntensity,
-        // float updatedColorPanIntensity
-    ) {
-        // dripDirection = updatedDripDirection;
-        // dripIntensity = updatedDripIntensity;
-        // colorIntensity = updatedColorIntensity;
-        // colorPanIntensity = updatedColorPanIntensity;
+    void update() {
+        frameToTakeSnapshot = floor(random(0, framesToPlaySnapshot));
+
+        dripXOff = random(0, 10);
         dripDirection = floor(random(0, 4)); // 4 different directions
         dripIntensity = random(0.001, 0.01);
         colorIntensity = random(0.001, 0.04);
-        // colorPanIntensity = updatedColorPanIntensity;
+        biosZoeBlendMode = possibleBlendModes[floor(random(0, possibleBlendModes.length))];
+        colorMorpherBlendMode = possibleBlendModes[floor(random(0, possibleBlendModes.length))];
     }
 }

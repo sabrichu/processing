@@ -45,3 +45,16 @@ void stopSnapshot() {
 
     System.gc();
 }
+
+void takeSnapshot() {
+    // Should be good for over a week of snapshots, ha
+    String paddedFrameCount = String.format("%07d", frameCount);
+    filenameToSend = "snapshot-" + paddedFrameCount + ".png";
+    saveFrame(pathToImagesFolder + "snapshot-#######.png");
+    println("File saved: " + filenameToSend);
+
+    // XXX: Move this so that we don't show the image right away
+    OscMessage message = new OscMessage("/newSnapshot");
+    message.add(filenameToSend);
+    oscP5.send(message, oscLocation);
+}

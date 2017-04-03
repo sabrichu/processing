@@ -13,18 +13,19 @@ NetAddress oscLocation;
 
 SyphonServer server;
 
-String pathToImagesFolder = "/Users/sabrichu/Projects/Creative Code 2017/The snapshot/dist/images/";
+String pathToImagesFolder = "/Users/sabrichu/Projects/Creative Code 2017/The Photobooth/dist/images/";
 String filenameToSend;
 
 String mode = "standby";
 // 10 frames per second (if performing well)
-int secondsToPlaySnapshot = 30 * 10;
-int snapshotCounter = 0;
+int secondsToPlaySnapshot = 20;
+int framesToPlaySnapshot;
+int snapshotFrameCounter = 0;
 
 Seed snapshotSeed;
 
 void settings() {
-    size(1200, 800, P3D);
+    size(1000, 700, P3D);
     PJOGL.profile = 1;
 }
 
@@ -35,6 +36,7 @@ void setup() {
     // setupThankYou();
 
     snapshotSeed = new Seed();
+    framesToPlaySnapshot = int(secondsToPlaySnapshot * frameRate);
 
     // For listening
     oscP5 = new OscP5(this, 12000);
@@ -50,13 +52,18 @@ void draw() {
     }
 
     if (mode == "snapshot") {
-        if (snapshotCounter < secondsToPlaySnapshot) {
+        if (snapshotFrameCounter < framesToPlaySnapshot) {
             drawSnapshot();
-            snapshotCounter++;
+
+            if (snapshotFrameCounter == snapshotSeed.frameToTakeSnapshot) {
+                takeSnapshot();
+            }
+
+            snapshotFrameCounter++;
         } else {
             stopSnapshot();
             mode = "thanks";
-            snapshotCounter = 0;
+            snapshotFrameCounter = 0;
         }
     }
 
