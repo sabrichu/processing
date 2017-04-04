@@ -15,7 +15,7 @@ void setupColorMorpher() {
 void drawColorMorpher() {
     float colorMorphNoiseFactor = snapshotSeed.colorIntensity;
     float colorMorphTimeFactor = snapshotSeed.colorPanIntensity;
-    int colorMorphPixelSize = 10;
+    int colorMorphPixelSize = 5;
 
     colorMorphYoff = colorMorphStart;
 
@@ -30,6 +30,7 @@ void drawColorMorpher() {
                 rgbValue(1, colorMorphXoff, colorMorphYoff, colorMorphZoff),
                 rgbValue(1.2, colorMorphXoff, colorMorphYoff, colorMorphZoff),
                 rgbValue(1.5, colorMorphXoff, colorMorphYoff, colorMorphZoff)
+                //floor(map(noise(colorMorphXoff, colorMorphYoff), 0, 1, 100, 255))
             ));
             colorMorpher.rect(x, y, colorMorphPixelSize, colorMorphPixelSize);
 

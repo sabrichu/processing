@@ -24,8 +24,8 @@ class Seed {
 
         dripXOff = random(0, 10);
         dripDirection = floor(random(0, 4)); // 4 different directions
-        dripIntensity = random(0.001, 0.01);
-        colorIntensity = random(0.001, 0.04);
+        dripIntensity = random(0.005, 0.02);
+        colorIntensity = random(0.005, 0.01);
         biosZoeBlendMode = possibleBlendModes[floor(random(0, possibleBlendModes.length))];
         colorMorpherBlendMode = possibleBlendModes[floor(random(0, possibleBlendModes.length))];
     }

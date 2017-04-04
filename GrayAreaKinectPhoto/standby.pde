@@ -119,8 +119,8 @@ void tintScreen(int closestPoint) {
     float mapped = floor(map(closestPoint, 0, 1048, 0, 255));
 
     // Debugging
-     println("Standby tint mapped: " + mapped);
+     // println("Standby tint mapped: " + mapped);
 
-    fill(0, min(mapped, 200));
+    fill(0, min(mapped, 100));
     rect(0, 0, width, height);
 }

@@ -17,15 +17,15 @@ String pathToImagesFolder = "/Users/sabrichu/Projects/Creative Code 2017/The Pho
 String filenameToSend;
 
 String mode = "standby";
-// 10 frames per second (if performing well)
-int secondsToPlaySnapshot = 20;
+
+int secondsToPlaySnapshot = 30;
 int framesToPlaySnapshot;
 int snapshotFrameCounter = 0;
 
 Seed snapshotSeed;
 
 void settings() {
-    size(1000, 700, P3D);
+    size(782, 440, P3D);
     PJOGL.profile = 1;
 }
 
