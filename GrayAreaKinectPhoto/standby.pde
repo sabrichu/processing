@@ -1,4 +1,3 @@
-Kinect kinect;
 int closestX = 0;
 int closestY = 0;
 Movie standbyVideo;
@@ -19,9 +18,6 @@ int personEnteredThreshold = 350;
 
 void setupStandby() {
     flickerMaxNumFrames = frameRate * flickerLoopMinutes * 60;
-
-    kinect = new Kinect(this);
-    kinect.initDepth();
 
     helloVideo = new Movie(this, "HelloSTART720.mov");
 
