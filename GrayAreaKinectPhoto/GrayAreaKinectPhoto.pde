@@ -1,15 +1,15 @@
 import codeanticode.syphon.*;
 
-import oscP5.*;
-import netP5.*;
+//import oscP5.*;
+//import netP5.*;
 
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
 
 import processing.video.*;
 
-OscP5 oscP5;
-NetAddress oscLocation;
+//OscP5 oscP5;
+//NetAddress oscLocation;
 
 SyphonServer server;
 
@@ -35,15 +35,16 @@ void setup() {
     setupColorMorpher();
     setupSnapshot();
     setupThankYou();
+
     hint(ENABLE_ASYNC_SAVEFRAME);
 
     snapshotSeed = new Seed();
     framesToPlaySnapshot = int(secondsToPlaySnapshot * frameRate);
 
     // For listening
-    oscP5 = new OscP5(this, 12000);
+    //oscP5 = new OscP5(this, 12000);
     // For sending
-    oscLocation = new NetAddress("localhost", 8000);
+    //oscLocation = new NetAddress("localhost", 8000);
 
     server = new SyphonServer(this, "Processing Syphon");
 }
@@ -93,6 +94,6 @@ void keyPressed() {
     }
 }
 
-void oscEvent(OscMessage message) {
-  //message.addrPattern();
-}
+//void oscEvent(OscMessage message) {
+//  //message.addrPattern();
+//}

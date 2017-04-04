@@ -48,9 +48,9 @@ void stopSnapshot() {
     zoeVideo.stop();
     kinectVideoContainer.save(pathToImagesFolder + "user-" + filenameToSend);
 
-    OscMessage message = new OscMessage("/newSnapshot");
-    message.add(filenameToSend);
-    oscP5.send(message, oscLocation);
+    //OscMessage message = new OscMessage("/newSnapshot");
+    //message.add(filenameToSend);
+    //oscP5.send(message, oscLocation);
 
     System.gc();
 }
