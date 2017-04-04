@@ -35,6 +35,7 @@ void setup() {
     setupColorMorpher();
     setupSnapshot();
     setupThankYou();
+    hint(ENABLE_ASYNC_SAVEFRAME);
 
     snapshotSeed = new Seed();
     framesToPlaySnapshot = int(secondsToPlaySnapshot * frameRate);
