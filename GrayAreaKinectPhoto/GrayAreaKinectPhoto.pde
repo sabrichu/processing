@@ -71,8 +71,7 @@ void draw() {
             stopSnapshot();
             snapshotFrameCounter = 0;
 
-            prepareThankYou();
-            mode = "thanks";
+            mountThankYou();
         }
     }
 
@@ -85,12 +84,11 @@ void keyPressed() {
     }
 
     if (key == 'h') {
-        mode = "standby";
+        mountStandby();
     }
 
     if (key == 'p') {
-        prepareSnapshot();
-        mode = "snapshot";
+        mountSnapshot();
     }
 }
 

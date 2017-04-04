@@ -14,12 +14,13 @@ void setupSnapshot() {
     biosVideo = new Movie(this, "moongrades.mov");
 }
 
-void prepareSnapshot() {
+void mountSnapshot() {
     zoeVideo.loop();
     biosVideo.loop();
     biosVideo.jump(random(biosVideo.duration()));
 
     snapshotSeed.update();
+    mode = "snapshot";
 }
 
 void drawSnapshot() {

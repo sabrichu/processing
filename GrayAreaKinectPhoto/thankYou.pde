@@ -4,9 +4,9 @@ void setupThankYou() {
     thankYouVideo = new Movie(this, "ThankYou720.mov");
 }
 
-void prepareThankYou() {
-    // XXX: Kind of weird that I don't have to do this for helloVideo...
+void mountThankYou() {
     thankYouVideo.jump(0);
+    mode = "thanks";
 }
 
 void drawThankYou() {
@@ -16,7 +16,7 @@ void drawThankYou() {
         thankYouVideo.jump(0);
         thankYouVideo.stop();
 
-        mode = "standby";
+        mountStandby();
     }
 
     thankYouVideo.play();

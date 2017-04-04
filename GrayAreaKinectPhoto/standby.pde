@@ -20,6 +20,11 @@ void setupStandby() {
     standbyVideo.loop();
 }
 
+void mountStandby() {
+    helloVideo.jump(0);
+    mode = "standby";
+}
+
 void drawStandby() {
     background(0);
 
@@ -31,8 +36,7 @@ void drawStandby() {
         helloVideo.stop();
         System.gc();
 
-        prepareSnapshot();
-        mode = "snapshot";
+        mountSnapshot();
     }
 
     if (isPersonOutOfRange && helloVideo.time() <= 0) {
