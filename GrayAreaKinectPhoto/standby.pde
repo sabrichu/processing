@@ -1,8 +1,5 @@
-int closestX = 0;
-int closestY = 0;
 Movie standbyVideo;
 Movie helloVideo;
-float videoWidthPercentage = 0.5;
 
 // Noise control
 float xoff = 0;
@@ -13,8 +10,6 @@ int flickerLoopMinutes = 1;
 int flickLoopFrames = 0;
 float flickerMaxNumFrames;
 int flickerFactor = 60;
-
-int personEnteredThreshold = 350;
 
 void setupStandby() {
     flickerMaxNumFrames = frameRate * flickerLoopMinutes * 60;
@@ -62,23 +57,6 @@ void drawStandby() {
     }
     fill(255, 0, 0);
     ellipse(closestX, closestY, 10, 10);
-}
-
-int getKinectClosestPoint() {
-    int closestValue = 9000;
-
-    int[] rawDepth = kinect.getRawDepth();
-    for (int i = 0; i < rawDepth.length; i++) {
-        int currentDepthValue = rawDepth[i];
-
-        if (currentDepthValue > 0 && currentDepthValue < closestValue) {
-            closestValue = currentDepthValue;
-            closestX = i % kinect.width;
-            closestY = (i - closestX) / kinect.width;
-        }
-    }
-
-    return closestValue;
 }
 
 void glitchOut() {
