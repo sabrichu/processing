@@ -13,10 +13,13 @@ void drawThankYou() {
     background(0);
 
     if (thankYouVideo.time() == thankYouVideo.duration()) {
-        thankYouVideo.jump(0);
-        thankYouVideo.stop();
+        if (isPersonOutOfRange()) {
+            // Wait until person has left before
+            thankYouVideo.jump(0);
+            thankYouVideo.stop();
 
-        mountStandby();
+            mountStandby();
+        }
     }
 
     thankYouVideo.play();

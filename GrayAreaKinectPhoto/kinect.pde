@@ -1,13 +1,24 @@
 Kinect kinect;
 int closestX = 0;
 int closestY = 0;
-
-int personEnteredThreshold = 350;
+int closestPoint;
+int personEnteredThreshold = 400;
+int personLeftThreshold = 600;
 
 void setupKinect() {
     kinect = new Kinect(this);
     kinect.initDepth();
     kinect.initVideo();
+}
+
+boolean isPersonOutOfRange() {
+    closestPoint = getKinectClosestPoint();
+    return closestPoint > personLeftThreshold;
+}
+
+boolean isPersonInRange() {
+    closestPoint = getKinectClosestPoint();
+    return closestPoint < personEnteredThreshold;
 }
 
 int getKinectClosestPoint() {

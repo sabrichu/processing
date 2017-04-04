@@ -28,9 +28,6 @@ void mountStandby() {
 void drawStandby() {
     background(0);
 
-    int closestPoint = getKinectClosestPoint();
-    boolean isPersonOutOfRange = closestPoint > personEnteredThreshold;
-
     if (helloVideo.time() == helloVideo.duration()) {
         helloVideo.jump(0);
         helloVideo.stop();
@@ -39,7 +36,7 @@ void drawStandby() {
         mountSnapshot();
     }
 
-    if (isPersonOutOfRange && helloVideo.time() <= 0) {
+    if (!isPersonInRange() && helloVideo.time() <= 0) {
         standbyVideo.read();
         drawCenteredVideo(standbyVideo);
 
@@ -56,9 +53,10 @@ void drawStandby() {
     }
 
     // Debugging
-    if (closestPoint < 350) {
-        println("Closest point: " + closestPoint);
-    }
+    textSize(72);
+    fill(0, 255, 0);
+    text("CLOSEST VALUE: " + closestPoint, 10, 100);
+
     fill(255, 0, 0);
     ellipse(closestX, closestY, 10, 10);
 }
