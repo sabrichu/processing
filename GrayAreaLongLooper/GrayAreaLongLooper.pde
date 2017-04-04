@@ -33,7 +33,7 @@ void setup() {
     setupStandby();
     setupColorMorpher();
     setupSnapshot();
-    // setupThankYou();
+    setupThankYou();
 
     snapshotSeed = new Seed();
     framesToPlaySnapshot = int(secondsToPlaySnapshot * frameRate);
@@ -51,6 +51,10 @@ void draw() {
         drawStandby();
     }
 
+    if (mode == "thanks") {
+        drawThankYou();
+    }
+
     if (mode == "snapshot") {
         if (snapshotFrameCounter < framesToPlaySnapshot) {
             drawSnapshot();
@@ -62,18 +66,11 @@ void draw() {
             snapshotFrameCounter++;
         } else {
             stopSnapshot();
-            mode = "thanks";
             snapshotFrameCounter = 0;
-        }
-    }
 
-    if (mode == "thanks") {
-        background(255, 0, 0);
-        // drawThankYou();
-        // Thank You DRGKLERKJLEK
-        // Or however you pronounce that
-        // please exit and retrieve your photobooth
-        // if thank video has ended, mode = "standby"
+            prepareThankYou();
+            mode = "thanks";
+        }
     }
 
     server.sendImage(get());
