@@ -23,7 +23,7 @@ void setupStandby() {
     kinect = new Kinect(this);
     kinect.initDepth();
 
-    helloVideo = new Movie(this, "Hello720.mov");
+    helloVideo = new Movie(this, "HelloSTART720.mov");
 
     standbyVideo = new Movie(this, "Declursified.mov");
     standbyVideo.loop();

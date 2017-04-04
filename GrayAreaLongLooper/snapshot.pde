@@ -17,8 +17,8 @@ void setupSnapshot() {
 }
 
 void prepareSnapshot() {
-    biosVideo.jump(random(0, biosVideo.duration()));
-    zoeVideo.jump(random(0, biosVideo.duration()));
+    biosVideo.jump(random(0, biosVideo.duration() - secondsToPlaySnapshot));
+    zoeVideo.jump(random(0, zoeVideo.duration() - secondsToPlaySnapshot));
 
     snapshotSeed.update();
 }
