@@ -82,7 +82,7 @@ void drawHello() {
         rect(0, 0, width * nearestThousandth / 5000, height);
     }
 
-    if (timeElapsed > 2200) {
+    if (timeElapsed > 22000) {
         fill(255, 0, 0);
         rect(0, 0, width, height);
     }
