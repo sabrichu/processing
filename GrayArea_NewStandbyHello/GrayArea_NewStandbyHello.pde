@@ -75,15 +75,16 @@ void drawHello() {
         text("YOUR PICTURE?", width / 2, height / 2.2 + 90);
     }
 
-    if (timeElapsed >= 15500 & timeElapsed < 16000) {
-        rect(0, 0, width, height);
-    }
-
-    if (timeElapsed >= 16000 & timeElapsed < 21000) {
-        float countdownSeconds = map(timeElapsed, 16000, 21000, 5000, 0);
+    if (timeElapsed >= 15500 & timeElapsed < 21500) {
+        float countdownSeconds = map(timeElapsed, 15500, 21000, 6000, 0);
         float nearestThousandth = countdownSeconds - countdownSeconds % 1000;
 
         rect(0, 0, width * nearestThousandth / 5000, height);
+    }
+
+    if (timeElapsed > 2200) {
+        fill(255, 0, 0);
+        rect(0, 0, width, height);
     }
 }
 
