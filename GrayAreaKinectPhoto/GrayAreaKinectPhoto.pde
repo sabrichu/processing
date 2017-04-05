@@ -79,6 +79,16 @@ void draw() {
 }
 
 void keyPressed() {
+    if (key == CODED) {
+        if (keyCode == UP) {
+            deg++;
+        } else if (keyCode == DOWN) {
+            deg--;
+        }
+        deg = constrain(deg, 0, 30);
+        kinect.setTilt(deg);
+    }
+
     if (key == 's') {
         takeSnapshot();
     }

@@ -22,6 +22,7 @@ void setupStandby() {
 
 void mountStandby() {
     helloVideo.jump(0);
+    helloVideo.stop();
     mode = "standby";
 }
 

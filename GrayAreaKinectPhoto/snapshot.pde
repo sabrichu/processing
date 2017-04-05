@@ -10,7 +10,7 @@ void setupSnapshot() {
     zoeVideoContainer = createImage(width, height, RGB);
     kinectVideoContainer = createImage(width, height, RGB);
 
-    zoeVideo = new Movie(this, "darkerClouds.mov");
+    zoeVideo = new Movie(this, "Clouds1080p.mov");
     biosVideo = new Movie(this, "moongrades.mov");
 }
 
@@ -47,6 +47,7 @@ void drawSnapshot() {
 void stopSnapshot() {
     biosVideo.stop();
     zoeVideo.stop();
+    kinectVideoContainer.blend(colorMorpher, 0, 0, width, height, 0, 0, width, height, DIFFERENCE);
     kinectVideoContainer.save(pathToImagesFolder + "user-" + filenameToSend);
 
     //OscMessage message = new OscMessage("/newSnapshot");
