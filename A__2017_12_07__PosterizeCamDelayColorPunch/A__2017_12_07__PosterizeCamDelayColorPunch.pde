@@ -8,8 +8,6 @@ import processing.video.*;
 //OscP5 oscP5;
 //NetAddress oscLocation;
 
-int videoWidth = 1920;
-
 Capture cam;
 PImage colorContainer;
 PImage camContainer;
@@ -20,13 +18,15 @@ int numberFrameDelay = 2;
 int indexToWrite = 0;
 int indexToRead = 1;
 
+Boolean drawDrip = true;
+
 PImage[] savedCamFrames = new PImage[numberFrameDelay];
 
 SyphonServer server;
 Seed snapshotSeed;
 
 void settings() {
-    size(1920, 200, P3D);
+    size(1500, 500, P3D);
     PJOGL.profile = 1;
     //frameRate(1);
 }
@@ -53,10 +53,10 @@ void draw() {
 
     camContainer = createImage(width, height, RGB);
     // camContainerDelay = createImage(width / 2, height, RGB);
-    camContainer.copy(cam, int(width * 0.25), 0, width / 2, height, 0, 0, width / 2, height);
+    camContainer.copy(cam, int(width * 0.25), 0, width / 2, height, 0, 0, width / 3, height);
 
     if (savedCamFrames[indexToRead] != null) {
-        camContainer.copy(savedCamFrames[indexToRead], int(width * 0.25), 0, width / 2, height, width / 2, 0, width / 2, height);
+        // camContainer.copy(savedCamFrames[indexToRead], int(width * 0.25), 0, width / 2, height, width / 2, 0, width / 2, height);
     }
 
     indexToWrite++;
@@ -73,10 +73,12 @@ void draw() {
     drawColorMorpher();
 
     colorContainer = createImage(width, height, RGB);
-    colorContainer.copy(colorMorpher, 0, 0, width, height, 0, 0, width / 2, height);
-    colorContainer.copy(colorMorpher, 0, 0, width, height, width / 2, 0, width / 2, height);
+    colorContainer.copy(colorMorpher, 0, 0, width, height, 0, 0, width / 3, height);
+    colorContainer.copy(colorMorpher, 0, 0, width, height, width / 3, 0, width / 3, height);
+    colorContainer.copy(colorMorpher, 0, 0, width, height, width * 2 / 3, 0, width / 3, height);
     camContainer.filter(POSTERIZE, 4);
-    camContainer.blend(colorContainer, 0, 0, width, height, 0, 0, width, height, EXCLUSION);
+    camContainer.blend(colorContainer, 0, 0, width, height, 0, 0, width, height, ADD);
+    //camContainer.blend(colorContainer, 0, 0, width, height, 0, 0, width, height, EXCLUSION);
       // colorMorpher.blend(camContainer, 0, 0, width, height, width / 2, 0, width / 2, height, ADD);
 
     image(camContainer, 0, 0);
@@ -84,7 +86,9 @@ void draw() {
      // image(colorMorpher, 0, 0);
 
 // Remember to change the loadPixels source depending on what you call image() in
-     // drawColorDrip();
+      if (drawDrip) {
+      drawColorDrip();
+      }
 
     server.sendImage(get());
 }
@@ -96,9 +100,25 @@ void keyPressed() {
         }
     }
 
+    if (key == 'q') {
+      drawDrip = false;
+    }
+    
+    if (key == 'w') {
+      drawDrip = true;
+    }
+
+    if (key == 'a') {
+        snapshotSeed.slowChange();
+    }
+
+    if (key == 's') {
+        snapshotSeed.normalChange();
+    }
+
     if (key == 'c') {
         snapshotSeed.update();
-    }
+   }
 }
 
 //void oscEvent(OscMessage message) {

@@ -4,7 +4,7 @@ class Seed {
     float dripXOff = 0;
     float dripIntensity = 0.01;
     float colorIntensity = 0.0075;
-    float colorPanIntensity = 0.003;
+    float colorPanIntensity = 0.00003;
 
     int[] possibleBlendModes = {
         DIFFERENCE,
@@ -14,6 +14,15 @@ class Seed {
         LIGHTEST,
         SCREEN
     };
+    void slowChange() {
+      //colorIntensity = 0.007;
+      colorPanIntensity = 0.00003;
+    }
+
+    void normalChange() {
+      //colorIntensity = 0.01;
+      colorPanIntensity = 0.03;
+    }
 
     void update() {
         dripXOff = random(0, 10);

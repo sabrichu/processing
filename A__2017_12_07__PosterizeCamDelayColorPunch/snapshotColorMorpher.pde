@@ -54,5 +54,5 @@ int rgbValue(
     float zoff
 ) {
     // Different magnitudes to make sure we get different rgb values
-    return floor(noise(xoff * magnitude, yoff * magnitude, zoff * magnitude) * 300);
+    return floor(noise(xoff * magnitude, yoff * magnitude, zoff * magnitude) * 320);
 }
